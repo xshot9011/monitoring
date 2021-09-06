@@ -1,7 +1,7 @@
 ---
-- name: Prepare host
+- name: Copy ssh-key to all host
   host: all
   become: true
   tasks:
-  - name: <task1_name>
-    <module>:
+  - name: scp-copy-command
+    ansible.builtin.shell: echo hello world
