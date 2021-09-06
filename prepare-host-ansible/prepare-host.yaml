@@ -1,0 +1,7 @@
+---
+- name: Prepare host
+  host: all
+  become: true
+  tasks:
+  - name: <task1_name>
+    <module>:
