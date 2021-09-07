@@ -3,5 +3,14 @@
   host: all
   become: true
   tasks:
-  - name: scp-copy-command
-    ansible.builtin.shell: echo hello world
+  - name: generate hash pass
+      delegate_to: localhost
+      command:  python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt('{{pass}}')"
+      register: hash
+  - debug:
+      var: hash.stdout
+  - name: update password
+    user:
+      name: xxxxxx
+      password: '{{hash.stdout}}'
+    become: yes
