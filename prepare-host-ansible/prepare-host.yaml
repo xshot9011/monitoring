@@ -1,22 +1,28 @@
 ---
 - name: Prepare host
-  host: localhost  # all
+  hosts: all
   become: true
 
   vars_prompt:
   - name: password
     prompt: "Enter password: "
-    private: no
+    private: yes
 
   tasks:
-  - name: generate hash pass
-      delegate_to: localhost
-      command:  python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt('{{password}}')"
-      register: hash
+  - name: Install python lib
+    delegate_to: localhost
+    pip:
+      name:
+      - passlib
+      - getpass4
+  - name: Generate hash pass
+    delegate_to: localhost
+    command:  python3 -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.encrypt('{{ password }}'))"
+    register: hash
   - debug:
       var: hash.stdout
-  #- name: update password
-  #  user:
-  #    name: xxxxxx
-  #    password: '{{hash.stdout}}'
-  #  become: yes
+  - name: Update password
+    user:
+      name: ubuntu
+      password: '{{hash.stdout}}'
+    become: yes
