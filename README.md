@@ -2,22 +2,58 @@
 
 # Bastion
 
-## Install ansible
+## Install kubectl
 
-[Installation documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+[Installation documentation](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 
-### Install pip
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+```
+
+## Install Helm
+
+[Installation documentation](https://helm.sh/docs/intro/install/)
+
+```bash
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```
+
+## Install pip
 
 ```bash
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 sudo python3 get-pip.py
 ```
 
-### Install Ansible
+## Install ansible
+
+[Installation documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+
+- craete requirements.txt file
+
+```txt
+ansible==2.9.1
+cffi==1.14.6
+cryptography==3.4.8
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+netaddr==0.8.0
+pycparser==2.20
+PyYAML==5.4.1
+```
+
+- install ansible
 
 ```bash
-sudo python3 -m pip install ansible
+python3 -m pip install virtualenv
+python3 -m venv <virtual_env_name>
+. ./<virtual_env_name>/bin/activate
+pip install -r requirements.txt
+ansible --version
 ```
+
 ## Prepare host
 
 ### 1. copy ssh to all host
