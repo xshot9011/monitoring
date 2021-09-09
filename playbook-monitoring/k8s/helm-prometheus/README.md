@@ -2,6 +2,8 @@
 
 [link](https://github.com/prometheus-community/helm-charts)
 
+VERSION 14.0.0
+
 ## Installation 
 
 - add chart
@@ -15,9 +17,10 @@ helm repo update
 - install 
 
 ```bash
-helm install <release_name> prometheus-community/prometheus -f <values_file.yaml> -n <namespace>
+helm install <release_name> prometheus-community/prometheus -f <values_file.yaml> -n <namespace> --version <VERSION>
 ```
 
 ## What's the differ from defualt
 
-- pushgateway.enabled = false
+- server.global.scrape_interval = 15s
+- server.ingress.enabled = true

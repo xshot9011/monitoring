@@ -73,3 +73,7 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-ssh-connectio
 ```bash
 ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/prepare-host.yaml
 ```
+
+# Monitoring Zone
+
+go to README in side playbook-monitoring
