@@ -766,8 +766,8 @@ server:
     ## Prometheus server Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
-    #  - prometheus.opstella.in.th
+    hosts:
+      - prometheus.develop.big.opsta.in.th
     #   - prometheus.domain.com
     #   - domain.com/prometheus
 

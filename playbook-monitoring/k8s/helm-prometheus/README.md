@@ -24,6 +24,9 @@ helm install <release_name> prometheus-community/prometheus -f <values_file.yaml
 
 - server.global.scrape_interval = 15s
 - server.ingress.enabled = true
+- server.ingress.hosts = [
+    prometheus.develop.big.opsta.in.th
+  ]
 - server.persistentVolume.enabled = false
 - server.securityContext.[
     runAsUser: 0
