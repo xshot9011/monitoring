@@ -107,10 +107,6 @@ alertmanager:
     ##
     enabled: false
 
-    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
-
     ## alertmanager Ingress annotations
     ##
     annotations: {}
@@ -127,11 +123,6 @@ alertmanager:
     hosts: []
     #   - alertmanager.domain.com
     #   - domain.com/alertmanager
-
-    path: /
-
-    # pathType is only for k8s >= 1.18
-    pathType: Prefix
 
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -306,18 +297,6 @@ alertmanager:
     #   cpu: 10m
     #   memory: 32Mi
 
-  # Custom DNS configuration to be added to alertmanager pods
-  dnsConfig: {}
-    # nameservers:
-    #   - 1.2.3.4
-    # searches:
-    #   - ns1.svc.cluster-domain.example
-    #   - my.dns.search.suffix
-    # options:
-    #   - name: ndots
-    #     value: "2"
-  #   - name: edns0
-
   ## Security context to be added to alertmanager pods
   ##
   securityContext:
@@ -364,7 +343,7 @@ configmapReload:
     ##
     image:
       repository: jimmidyson/configmap-reload
-      tag: v0.5.0
+      tag: v0.4.0
       pullPolicy: IfNotPresent
 
     ## Additional configmap-reload container arguments
@@ -402,7 +381,7 @@ configmapReload:
     ##
     image:
       repository: jimmidyson/configmap-reload
-      tag: v0.5.0
+      tag: v0.4.0
       pullPolicy: IfNotPresent
 
     ## Additional configmap-reload container arguments
@@ -451,10 +430,6 @@ nodeExporter:
   ##
   hostPID: true
 
-  ## If true, node-exporter pods mounts host / at /host/root
-  ##
-  hostRootfs: true
-
   ## node-exporter container name
   ##
   name: node-exporter
@@ -463,7 +438,7 @@ nodeExporter:
   ##
   image:
     repository: quay.io/prometheus/node-exporter
-    tag: v1.1.2
+    tag: v1.0.1
     pullPolicy: IfNotPresent
 
   ## Specify if a Pod Security Policy for node-exporter must be created
@@ -553,18 +528,6 @@ nodeExporter:
     #   cpu: 100m
     #   memory: 30Mi
 
-  # Custom DNS configuration to be added to node-exporter pods
-  dnsConfig: {}
-    # nameservers:
-    #   - 1.2.3.4
-    # searches:
-    #   - ns1.svc.cluster-domain.example
-    #   - my.dns.search.suffix
-    # options:
-    #   - name: ndots
-    #     value: "2"
-  #   - name: edns0
-
   ## Security context to be added to node-exporter pods
   ##
   securityContext:
@@ -626,7 +589,7 @@ server:
   ##
   image:
     repository: quay.io/prometheus/prometheus
-    tag: v2.26.0
+    tag: v2.24.0
     pullPolicy: IfNotPresent
 
   ## prometheus server priorityClassName
@@ -683,7 +646,7 @@ server:
   global:
     ## How frequently to scrape targets by default
     ##
-    scrape_interval: 15s
+    scrape_interval: 1m
     ## How long until a scrape request times out
     ##
     scrape_timeout: 10s
@@ -747,11 +710,7 @@ server:
   ingress:
     ## If true, Prometheus server Ingress will be created
     ##
-    enabled: true
-
-    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
+    enabled: false
 
     ## Prometheus server Ingress annotations
     ##
@@ -767,7 +726,6 @@ server:
     ## Must be provided if Ingress is enabled
     ##
     hosts: []
-    #  - prometheus.opstella.in.th
     #   - prometheus.domain.com
     #   - domain.com/prometheus
 
@@ -830,7 +788,7 @@ server:
     ## If true, Prometheus server will create/use a Persistent Volume Claim
     ## If false, use emptyDir
     ##
-    enabled: false
+    enabled: true
 
     ## Prometheus server data Persistent Volume access modes
     ## Must match those of existing PV or dynamic provisioner
@@ -964,14 +922,6 @@ server:
     #   cpu: 500m
     #   memory: 512Mi
 
-  # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
-  # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
-  ##
-  hostNetwork: false
-
-  # When hostNetwork is enabled, you probably want to set this to ClusterFirstWithHostNet
-  dnsPolicy: ClusterFirst
-
   ## Vertical Pod Autoscaler config
   ## Ref: https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler
   verticalAutoscaler:
@@ -981,29 +931,13 @@ server:
     # containerPolicies:
     # - containerName: 'prometheus-server'
 
-  # Custom DNS configuration to be added to prometheus server pods
-  dnsConfig: {}
-    # nameservers:
-    #   - 1.2.3.4
-    # searches:
-    #   - ns1.svc.cluster-domain.example
-    #   - my.dns.search.suffix
-    # options:
-    #   - name: ndots
-    #     value: "2"
-  #   - name: edns0
   ## Security context to be added to server pods
   ##
-  ## Issue on this link https://github.com/prometheus-community/helm-charts/issues/910
   securityContext:
-    runAsUser: 0
-    runAsNonRoot: false
-    runAsGroup: 0
-    fsGroup: 0
-    # runAsUser: 65534
-    # runAsNonRoot: true
-    # runAsGroup: 65534
-    # fsGroup: 65534
+    runAsUser: 65534
+    runAsNonRoot: true
+    runAsGroup: 65534
+    fsGroup: 65534
 
   service:
     annotations: {}
@@ -1094,11 +1028,6 @@ pushgateway:
     #   - pushgateway.domain.com
     #   - domain.com/pushgateway
 
-    path: /
-
-    # pathType is only for k8s >= 1.18
-    pathType: Prefix
-
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
     # - path: /*
@@ -1173,18 +1102,6 @@ pushgateway:
     # requests:
     #   cpu: 10m
     #   memory: 32Mi
-
-  # Custom DNS configuration to be added to push-gateway pods
-  dnsConfig: {}
-    # nameservers:
-    #   - 1.2.3.4
-    # searches:
-    #   - ns1.svc.cluster-domain.example
-    #   - my.dns.search.suffix
-    # options:
-    #   - name: ndots
-    #     value: "2"
-  #   - name: edns0
 
   ## Security context to be added to push-gateway pods
   ##
@@ -1313,7 +1230,7 @@ serverFiles:
     rule_files:
       - /etc/config/recording_rules.yml
       - /etc/config/alerting_rules.yml
-      ## Below two files are DEPRECATED will be removed from this default values file
+    ## Below two files are DEPRECATED will be removed from this default values file
       - /etc/config/rules
       - /etc/config/alerts
 
@@ -1321,37 +1238,7 @@ serverFiles:
       - job_name: prometheus
         static_configs:
           - targets:
-              - localhost:9090
-      - job_name: 'opstella-develop'
-        scrape_interval: 30s
-        honor_labels: true
-        metrics_path: '/federate'
-        params:
-          'match[]':
-            - '{job="kube-state-metrics"}'
-            - '{job="kubelet"}'
-            - '{job="kubernetes-service-endpoints"}'
-            - '{job="service-postgres"}'
-            - '{job="service-rabbitmq"}'
-            - '{job="service-redis"}'
-            - '{job="service-elasticsearch"}'
-            - '{job="opstella-blackbox"}'
-            # - '{job="cloud-memorystore"}'
-        static_configs:
-          - targets:
-            - 'prometheus-devops.develop.opstella.in.th'
-            labels:
-              env: develop
-              project: opstella
-              type: develop
-              hostname:  opstella-devops-develop
-        metric_relabel_configs:
-          - source_labels: [job]
-            regex: 'kubernetes-service-endpoints'
-            action: replace
-            target_label: job
-            replacement: opstella-devops-develop-node-exporter
-
+            - localhost:9090
 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
@@ -1397,12 +1284,7 @@ serverFiles:
         # will add targets for each API server which Kubernetes adds an endpoint to
         # the default/kubernetes service.
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_namespace,
-                __meta_kubernetes_service_name,
-                __meta_kubernetes_endpoint_port_name
-              ]
+          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
             action: keep
             regex: default;kubernetes;https
 
@@ -1501,31 +1383,18 @@ serverFiles:
           - role: endpoints
 
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_scrape
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
             action: keep
             regex: true
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_scheme
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
             action: replace
             target_label: __scheme__
             regex: (https?)
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_path
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-          - source_labels:
-              [
-                __address__,
-                __meta_kubernetes_service_annotation_prometheus_io_port
-              ]
+          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
             action: replace
             target_label: __address__
             regex: ([^:]+)(?::\d+)?;(\d+)
@@ -1563,31 +1432,18 @@ serverFiles:
           - role: endpoints
 
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_scrape_slow
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_slow]
             action: keep
             regex: true
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_scheme
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
             action: replace
             target_label: __scheme__
             regex: (https?)
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_path
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-          - source_labels:
-              [
-                __address__,
-                __meta_kubernetes_service_annotation_prometheus_io_port
-              ]
+          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
             action: replace
             target_label: __address__
             regex: ([^:]+)(?::\d+)?;(\d+)
@@ -1611,10 +1467,7 @@ serverFiles:
           - role: service
 
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_service_annotation_prometheus_io_probe
-              ]
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
             action: keep
             regex: pushgateway
 
@@ -1666,31 +1519,18 @@ serverFiles:
           - role: pod
 
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_scrape
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
             action: keep
             regex: true
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_scheme
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
             action: replace
             regex: (https?)
             target_label: __scheme__
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_path
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-          - source_labels:
-              [
-                __address__,
-                __meta_kubernetes_pod_annotation_prometheus_io_port
-              ]
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
             action: replace
             regex: ([^:]+)(?::\d+)?;(\d+)
             replacement: $1:$2
@@ -1704,7 +1544,7 @@ serverFiles:
             action: replace
             target_label: kubernetes_pod_name
           - source_labels: [__meta_kubernetes_pod_phase]
-            regex: Pending|Succeeded|Failed|Completed
+            regex: Pending|Succeeded|Failed
             action: drop
 
       # Example Scrape config for pods which should be scraped slower. An useful example
@@ -1727,31 +1567,18 @@ serverFiles:
           - role: pod
 
         relabel_configs:
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_scrape_slow
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape_slow]
             action: keep
             regex: true
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_scheme
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
             action: replace
             regex: (https?)
             target_label: __scheme__
-          - source_labels:
-              [
-                __meta_kubernetes_pod_annotation_prometheus_io_path
-              ]
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-          - source_labels:
-              [
-                __address__,
-                __meta_kubernetes_pod_annotation_prometheus_io_port
-              ]
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
             action: replace
             regex: ([^:]+)(?::\d+)?;(\d+)
             replacement: $1:$2
@@ -1765,7 +1592,7 @@ serverFiles:
             action: replace
             target_label: kubernetes_pod_name
           - source_labels: [__meta_kubernetes_pod_phase]
-            regex: Pending|Succeeded|Failed|Completed
+            regex: Pending|Succeeded|Failed
             action: drop
 
 # adds additional scrape configs to prometheus.yml

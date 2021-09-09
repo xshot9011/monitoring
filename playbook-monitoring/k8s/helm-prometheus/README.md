@@ -24,3 +24,10 @@ helm install <release_name> prometheus-community/prometheus -f <values_file.yaml
 
 - server.global.scrape_interval = 15s
 - server.ingress.enabled = true
+- server.persistentVolume.enabled = false
+- server.securityContext.[
+    runAsUser: 0
+    runAsNonRoot: false
+    runAsGroup: 0
+    fsGroup: 0
+  ]
