@@ -28,7 +28,3 @@ helm upgrade --install mongodb bitnami/mongodb -f values-opsta.yaml -n datastore
 ## What's the differ from defualt
 
 - persistence.enabled = false
-- metrics.enabled = true
-- metrics.serviceMonitor.enabled = true
-- metrics.serviceMonitor.namespace = "datastore"
-- metrics.serviceMonitor.interval = 15s
