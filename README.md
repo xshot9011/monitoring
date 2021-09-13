@@ -74,6 +74,12 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-ssh-connectio
 ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/prepare-host.yaml
 ```
 
+# k8s
+
+## 1. Install nginx-ingress
+
+go to helm/nginx-ingress and follow [README](./helm/nginx-ingress/README.md)
+
 # Monitoring Zone
 
 go to README in side playbook-monitoring
