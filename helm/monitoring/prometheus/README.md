@@ -20,6 +20,12 @@ helm repo update
 helm install <release_name> prometheus-community/prometheus -f <values_file.yaml> -n <namespace> --version <VERSION>
 ```
 
+### Example usage
+
+```bash
+helm install prometheus prometheus-community/prometheus values-opsta.yaml -n monitoring --version 14.0.0
+```
+
 ## What's the differ from defualt
 
 - server.global.scrape_interval = 15s
