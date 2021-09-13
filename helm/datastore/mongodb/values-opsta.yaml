@@ -752,7 +752,7 @@ externalAccess:
 persistence:
   ## @param persistence.enabled Enable MongoDB&reg; data persistence using PVC
   ##
-  enabled: true
+  enabled: false
   ## @param persistence.existingClaim Provide an existing `PersistentVolumeClaim` (only when `architecture=standalone`)
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
