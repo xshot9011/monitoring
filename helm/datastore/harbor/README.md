@@ -27,5 +27,4 @@ helm upgrade --install harbor harbor/harbor -f values-opsta.yaml -n datastore --
 
 ## What's the differ from defualt
 
-- controller.autoscaling.enabled = true
-- controller.service.type = LoadBalancer -> comment
+-

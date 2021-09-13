@@ -80,6 +80,14 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/
 
 go to helm/nginx-ingress and follow [README](./helm/nginx-ingress/README.md)
 
+## 2. Install mongodb
+
+go to helm/datastore/mongodb and follow [README](./helm/datastore/mongodb/README.md)
+
+## 3. Install harbor
+
+go to helm/datastore/harbor and follow [README](./helm/datastore/harbor/README.md)
+
 # Monitoring Zone
 
 go to README in side playbook-monitoring
