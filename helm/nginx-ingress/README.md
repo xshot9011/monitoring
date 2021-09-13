@@ -29,12 +29,12 @@ helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx -f values-opsta
 
 - controller.autoscaling.enabled = true
 - controller.service.type = LoadBalancer -> comment
-- controller.service
+- controller.service -> uncomment and 
   ```yaml
-  type: NodePort
-  nodePorts:
-    http: 30608
-    https: 32475
-    tcp:
-      8080: 30608
+    type: NodePort
+    nodePorts:
+      http: 30608
+      https: 32475
+      tcp:
+        8080: 30608
   ```

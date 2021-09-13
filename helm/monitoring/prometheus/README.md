@@ -28,15 +28,24 @@ helm install prometheus prometheus-community/prometheus values-opsta.yaml -n mon
 
 ## What's the differ from defualt
 
-- server.global.scrape_interval = 15s
-- server.ingress.enabled = true
-- server.ingress.hosts = [
+- server.global.scrape_interval -> 30s -> 15s
+- server.ingress.enabled -> false -> true
+- server.ingress.hosts -> [] -> 
+  [
     prometheus.develop.big.opsta.in.th
   ]
-- server.persistentVolume.enabled = false
-- server.securityContext.[
-    runAsUser: 0
-    runAsNonRoot: false
-    runAsGroup: 0
-    fsGroup: 0
-  ]
+- server.persistentVolume.enabled -> true -> false
+- server.securityContext ->
+  ```yaml
+      # runAsUser: 65534
+      # runAsNonRoot: true
+      # runAsGroup: 65534
+      # fsGroup: 65534
+  ``` 
+  ->
+  ```yaml
+      runAsUser: 0
+      runAsNonRoot: false
+      runAsGroup: 0
+      fsGroup: 0
+  ```

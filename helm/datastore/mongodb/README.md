@@ -27,4 +27,4 @@ helm upgrade --install mongodb bitnami/mongodb -f values-opsta.yaml -n datastore
 
 ## What's the differ from defualt
 
-- persistence.enabled = false
+- persistence.enabled -> true -> false
