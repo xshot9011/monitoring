@@ -22,7 +22,7 @@ helm upgrade --install <release_name> ingress-nginx/ingress-nginx -f <values_fil
 ### Example usage
 
 ```bash
-helm install nginx-ingress ingress-nginx/ingress-nginx -f values-opsta.yaml -n kube-system --version 4.0.1
+helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx -f values-opsta.yaml -n kube-system --version 4.0.1
 ```
 
 ## What's the differ from defualt
