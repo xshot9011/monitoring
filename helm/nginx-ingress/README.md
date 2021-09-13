@@ -38,6 +38,3 @@ helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx -f values-opsta
     tcp:
       8080: 30608
   ```
-- controller.metrics.enabled = true
-- controller.metrics.serviceMonitor.enabled
-- controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
