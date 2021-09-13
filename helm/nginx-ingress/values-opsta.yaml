@@ -605,7 +605,7 @@ controller:
     serviceMonitor:
       enabled: true
       additionalLabels:
-      - release="prometheus"
+        release: "prometheus"
       # The label to use to retrieve the job name from.
       # jobLabel: "app.kubernetes.io/name"
       namespace: ""
