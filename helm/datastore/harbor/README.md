@@ -27,4 +27,13 @@ helm upgrade --install harbor harbor/harbor -f values-opsta.yaml -n datastore --
 
 ## What's the differ from defualt
 
--
+- expose.ingress.hosts -> template domain ->
+  ```yaml
+        core: core.harbor.big.opsta.in.th
+        notary: notary.harbor.big.opsta.in.th
+  ```
+- expose.ingress.annotation -> add more map ->
+  ```yaml
+        kubernetes.io/ingress.class: nginx  
+  ```
+

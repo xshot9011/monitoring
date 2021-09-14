@@ -30,6 +30,10 @@ helm install prometheus prometheus-community/prometheus values-opsta.yaml -n mon
 
 - server.global.scrape_interval -> 30s -> 15s
 - server.ingress.enabled -> false -> true
+- server.ingress.annotations -> {} -> 
+  ```yaml
+        kubernetes.io/ingress.class: nginx
+  ```
 - server.ingress.hosts -> [] -> 
   [
     prometheus.develop.big.opsta.in.th
@@ -49,3 +53,4 @@ helm install prometheus prometheus-community/prometheus values-opsta.yaml -n mon
       runAsGroup: 0
       fsGroup: 0
   ```
+- pushgateway.enabled -> true -> false

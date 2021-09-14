@@ -27,9 +27,9 @@ helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx -f values-opsta
 
 ## What's the differ from defualt
 
-- controller.autoscaling.enabled = true
+- controller.autoscaling.enabled -> false -> true
 - controller.service.type = LoadBalancer -> comment
-- controller.service -> uncomment and 
+- controller.service -> uncomment and note
   ```yaml
     type: NodePort
     nodePorts:
