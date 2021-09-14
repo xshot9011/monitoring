@@ -1,0 +1,75 @@
+---
+prometheus_web_listen_address: "0.0.0.0:9090"
+prometheus_web_external_url: 'http://localhost:9090/prometheus'
+
+prometheus_global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+prometheus_scrape_configs:
+  - job_name: "prometheus"
+    metrics_path: "{{ prometheus_metrics_path }}"
+    static_configs:
+      - targets:
+          - "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}:9090"
+  - job_name: 'develop'
+    scrape_interval: 30s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{job="kube-state-metrics"}'
+        - '{job="kubelet"}'
+        - '{job="kubernetes-service-endpoints"}'
+        # - '{job="service-postgres"}'
+        # - '{job="service-rabbitmq"}'
+        # - '{job="service-redis"}'
+        # - '{job="service-elasticsearch"}'
+        # - '{job="opstella-blackbox"}'
+    static_configs:
+      - targets:
+        - 'prometheus.develop.big.opsta.in.th'
+        labels:
+          env: develop
+          project: opstella
+          type: develop
+          hostname:  opstella-devops-develop
+    metric_relabel_configs:
+      - source_labels: [job]
+        regex: 'kubernetes-service-endpoints'
+        action: replace
+        target_label: job
+        replacement: devops-develop-node-exporter
+
+  # not install node exporter yet ahah
+  # - job_name: "ntl-k8s-node-exporter"
+  #   metrics_path: /metrics
+  #   scrape_interval: 30s
+  #   static_configs:
+  #     - targets: [
+  #         "10.45.41.81:9100", 
+  #         "10.45.41.82:9100", 
+  #         "10.45.41.83:9100", 
+  #         "10.45.41.84:9100", 
+  #         "10.45.41.85:9100", 
+  #         "10.45.41.86:9100", 
+  #         "10.45.41.72:9100", 
+  #         "10.45.41.73:9100", 
+  #         "10.45.41.136:9100",
+  #         "10.45.41.137:9100",
+  #         "10.45.41.138:9100",
+  #         "10.45.41.139:9100",
+  #         "10.45.41.140:9100"
+  #       ]
+  #       labels:
+  #         env: production
+  #         project: cdc
+
+prometheus_alert_rules: []
+
+prometheus_storage_retention: "1d"
+# Available since Prometheus 2.7.0
+# [EXPERIMENTAL] Maximum number of bytes that can be stored for blocks. Units
+# supported: KB, MB, GB, TB, PB.
+prometheus_storage_retention_size: "10GB"
