@@ -36,4 +36,5 @@ helm upgrade --install harbor harbor/harbor -f values-opsta.yaml -n datastore --
   ```yaml
         kubernetes.io/ingress.class: nginx  
   ```
-
+- externalURL -> https://core.harbor.domain -> https://core.harbor.big.opsta.in.th
+- persistence.enabled -> true -> false

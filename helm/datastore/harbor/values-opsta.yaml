@@ -49,6 +49,7 @@ expose:
       ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      kubernetes.io/ingress.class: nginx
     notary:
       # notary-specific annotations
       annotations: {}
@@ -117,7 +118,7 @@ expose:
 # the IP address of k8s node
 #
 # If Harbor is deployed behind the proxy, set it as the URL of proxy
-externalURL: https://core.harbor.domain
+externalURL: https://core.harbor.big.opsta.in.th
 
 # The internal TLS used for harbor components secure communicating. In order to enable https
 # in each components tls cert files need to provided in advance.
@@ -188,7 +189,7 @@ internalTLS:
 # For storing images and charts, you can also use "azure", "gcs", "s3",
 # "swift" or "oss". Set it in the "imageChartStorage" section
 persistence:
-  enabled: true
+  enabled: false
   # Setting it to "keep" to avoid removing PVCs during a helm delete
   # operation. Leaving it empty will delete PVCs after the chart deleted
   # (this does not apply for PVCs that are created for internal database

@@ -23,7 +23,7 @@ helm install <release_name> prometheus-community/prometheus -f <values_file.yaml
 ### Example usage
 
 ```bash
-helm install prometheus prometheus-community/prometheus values-opsta.yaml -n monitoring --version 14.0.0
+helm install prometheus prometheus-community/prometheus -f values-opsta.yaml -n monitoring --version 14.0.0
 ```
 
 ## What's the differ from defualt
