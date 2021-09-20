@@ -76,11 +76,6 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/
 
 # HAProxy
 
----
-----
---- 
-# Start of temporary zone 
-
 ## Prerequisite
 
 User with sudo privileges
@@ -88,33 +83,15 @@ User with sudo privileges
 ## What's used here
 
 - Ubuntu 20.04.2 LTS (Focal Fossa)
-- HAproxy <version> *****
+- HA-Proxy version 2.0.13-2ubuntu0.3 2021/08/27 - https://haproxy.org/
 
-## 1. Edit host config
-
-```txt
-vi /etc/hosts
-```
-
-Then, edit file in format of
-
-```txt
-<haproxy-hostname> <haproxy-ipaddress>
-```
-
-### Example usage
-
-```txt
-big-loadbalancer 10.22.1.65
-```
-
-## 2. Allow ufw
+## 1. Allow ufw
 
 ```bash
 sudo ufw allow 80/tcp
 ```
 
-## 3. Install HAproxy
+## 2. Install HAproxy
 
 ```bash
 sudo apt-get update
@@ -169,10 +146,11 @@ backend graylog.big.opsta.in.th
 haproxy -c -f <file_config>
 ```
 
-# End of temporary zone
----
----
----
+## 5. Restart systemd service
+
+```bash
+systemctl restart haproxy
+```
 
 # k8s
 
