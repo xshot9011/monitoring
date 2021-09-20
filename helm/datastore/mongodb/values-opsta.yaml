@@ -136,7 +136,7 @@ auth:
   ## @param auth.rootPassword MongoDB&reg; root password
   ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#setting-the-root-password-on-first-run
   ##
-  rootPassword: ""
+  rootPassword: mongodb_password
   ## MongoDB&reg; custom user and database
   ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#creating-a-user-and-database-on-first-run
   ## @param auth.username MongoDB&reg; custom user (mandatory if `auth.database` is set)
