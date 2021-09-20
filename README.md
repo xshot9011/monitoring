@@ -135,17 +135,17 @@ Append information with
 ```conf
 frontend web-server
     bind 10.22.1.63:80
-    mode http
+    mode tcp
 
     # ACL and backend
-    acl k8s_cluster_host hdr_end(host) -i .cluster.big.opsta.in.th
+    #acl k8s_cluster_host hdr_end(host) -i .cluster.big.opsta.in.th
     use_backend k8s_cluster if k8s_cluster_host
     # acl prometheus_host hdr(host) -i prometheus.big.opsta.in.th
     # use_backend prometheus if prometheus_host
     # acl graylog_host hdr(host) -i graylog.big.opsta.in.th
     # use_backend graylog if graylog_host
 
-    default_backend %[req.hdr(Host),lower]
+    use_backend %[req.hdr(Host),lower]
 
 backend k8s_cluster
     balance roundrobin
