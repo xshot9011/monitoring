@@ -36,7 +36,7 @@ helm upgrade --install prometheus prometheus-community/prometheus -f values-opst
   ```
 - server.ingress.hosts -> [] -> 
   [
-    grafana.cluster.big.opsta.in.th/prometheus
+    prometheus.develop.cluster.big.opsta.in.th
   ]
 - server.persistentVolume.enabled -> true -> false
 - server.securityContext ->
