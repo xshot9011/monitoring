@@ -28,3 +28,4 @@ helm upgrade --install mongodb-exporter prometheus-community/prometheus-mongodb-
 ## What's the differ from defualt
 
 - mongodb.uri -> "" -> <url>*****
+- serviceMonitor.namespace ->   -> datastore

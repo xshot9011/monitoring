@@ -36,7 +36,7 @@ helm upgrade --install prometheus prometheus-community/prometheus -f values-opst
   ```
 - server.ingress.hosts -> [] -> 
   [
-    prometheus.develop.big.opsta.in.th
+    prometheus.develop.cluster.big.opsta.in.th
   ]
 - server.persistentVolume.enabled -> true -> false
 - server.securityContext ->
@@ -54,3 +54,17 @@ helm upgrade --install prometheus prometheus-community/prometheus -f values-opst
       fsGroup: 0
   ```
 - pushgateway.enabled -> true -> false
+- serverFiles.prometheus.yml.scrape_configs -> append ->
+  ```yaml
+        - job_name: service-mongodb
+        metrics_path: /metrics
+        scheme: http
+        static_configs:
+          - targets:
+              - ""  # put the service:port to this shit
+            labels:
+              env: dev
+              project: opsta-monitoring
+              type: datastore
+              service: mongodb
+  ```

@@ -1322,6 +1322,17 @@ serverFiles:
         static_configs:
           - targets:
               - localhost:9090
+      - job_name: service-mongodb
+        metrics_path: /metrics
+        scheme: http
+        static_configs:
+          - targets:
+              - ""  # put the service:port to this shit
+            labels:
+              env: dev
+              project: opsta-monitoring
+              type: datastore
+              service: mongodb
 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
