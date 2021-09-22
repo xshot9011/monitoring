@@ -73,19 +73,3 @@ kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheu
       fsGroup: 0
   ```
 - pushgateway.enabled -> true -> false
-
-***** not done yet*****
-- serverFiles.prometheus.yml.scrape_configs -> append ->
-  ```yaml
-        - job_name: service-mongodb
-        metrics_path: /metrics
-        scheme: http
-        static_configs:
-          - targets:
-              - ""  # put the service:port to this shit
-            labels:
-              env: dev
-              project: opsta-monitoring
-              type: datastore
-              service: mongodb
-  ```

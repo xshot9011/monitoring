@@ -1327,7 +1327,7 @@ serverFiles:
         scheme: http
         static_configs:
           - targets:
-              - ""  # put the service:port to this shit
+              - "mongodb-exporter-prometheus-mongodb-exporter:9216"  # put the service:port to this shit
             labels:
               env: dev
               project: opsta-monitoring

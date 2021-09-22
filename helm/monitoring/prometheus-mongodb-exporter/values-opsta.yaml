@@ -26,7 +26,7 @@ livenessProbe:
 
 # [mongodb[+srv]://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
 mongodb:
-  uri: "mongodb://root:mongodb_password@mongodb.datastore.svc.cluster.local/?authSource=admin"
+  uri: "mongodb://root:mongodb_password@mongodb.datastore.svc.cluster.local:27017/"
 
 # Name of an externally managed secret (in the same namespace) containing the connection uri as key `mongodb-uri`.
 # If this is provided, the value mongodb.uri is ignored.

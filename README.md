@@ -182,8 +182,13 @@ netstat -ntl
 
 Happy: !
 
-www.prometheus.big.opsta.in.th/graph
+http://prometheus.big.opsta.in.th/graph
 
 ### Coming soon
 
 setting up for graylog access
+
+## Scrapeconfig
+
+***** Insert scrpeconfig here *****
+
