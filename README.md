@@ -75,7 +75,37 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-ssh-connectio
 ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/prepare-host.yaml
 ```
 
+# DNS setting
+
+We have set DNS point to prometheus.big.opsta.in.th -> 10.22.1.63 (prometheus-host)
+
+## Prometheus-host
+
+We will redirect port from 80 to 9090; running prometheus
+
+Then, you can access website via <prometheus_url>/ instead of <prometheus_url>:<prometheus_port>/
+
+```bash
+sudo iptables -t nat -A PREROUTING -p tcp --dport <incoming_port> -j REDIRECT --to-port <upgoing_port>
+# verify config
+netstat -ntl
+```
+
+Happy: !
+
+www.prometheus.big.opsta.in.th/graph
+
+### Coming soon
+
+setting up for graylog access
+
 # HAProxy
+
+## Overview
+
+Function on layer 4 is very wowowwwowowowowowow za
+
+If you want to use layer 7 functional, use nginx instead
 
 ## Prerequisite
 
@@ -113,32 +143,13 @@ Append information with
 ```conf
 frontend web-server
     bind :80
-
-    # ACL and backend for service in kubernetes
-    acl k8s_cluster_host hdr_end(host) -i .cluster.big.opsta.in.th
-    use_backend k8s_cluster if k8s_cluster_host
-
-    use_backend %[req.hdr(Host),lower]
+    use_backend k8s_cluster
 
 backend k8s_cluster
     balance roundrobin
     server master1 10.22.1.64:30608 check
     server worker1 10.22.1.59:30608 check
     server worker2 10.22.1.54:30608 check
-
-backend prometheus.big.opsta.in.th
-    balance roundrobin
-    option httpchk HEAD /
-    default-server check maxconn 2000
-    server prometheus 10.22.1.63:9090 check
-
-backend graylog.big.opsta.in.th
-    balance roundrobin
-    option httpchk HEAD /
-    default-server check maxconn 2000
-    server graylog1 10.22.1.60:9000 check
-    server graylog2 10.22.1.66:9000 check
-    server graylog3 10.22.1.62:9000 check
 ```
 
 ## 4. Verify configuration
