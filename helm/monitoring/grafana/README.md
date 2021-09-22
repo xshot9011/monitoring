@@ -30,7 +30,7 @@ helm upgrade --install grafana grafana/grafana -f values-opsta.yaml -n monitorin
 - serviceMonitor.enabled -> false -> true
 - ingress.enabled -> false -> true
 - ingress.annotations -> {} -> kubernetes.io/ingress.class: nginx
-- ingress.hosts -> [chart-example.local] -> [grafana.cluster.big.opsta.in.th/prometheus]
+- ingress.hosts -> [chart-example.local] -> [grafana.develop.cluster.big.opsta.in.th]
 - adminPassword -> uncomment -> grafana_password
 - datasources.datasources.yaml -> {} ->
   ```yaml
@@ -38,7 +38,7 @@ helm upgrade --install grafana grafana/grafana -f values-opsta.yaml -n monitorin
       datasources:
       - name: Prometheus
         type: prometheus
-        url: grafana.cluster.big.opsta.in.th/prometheus
+        url: prometheus.develop.cluster.big.opsta.in.th
         access: proxy
         isDefault: true
   ````

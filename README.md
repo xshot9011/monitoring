@@ -75,30 +75,6 @@ ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-ssh-connectio
 ansible-playbook -i inventories/opsta-host/monitoring.ini playbook-prepare-host/prepare-host.yaml
 ```
 
-# DNS setting
-
-We have set DNS point to prometheus.big.opsta.in.th -> 10.22.1.63 (prometheus-host)
-
-## Prometheus-host
-
-We will redirect port from 80 to 9090; running prometheus
-
-Then, you can access website via <prometheus_url>/ instead of <prometheus_url>:<prometheus_port>/
-
-```bash
-sudo iptables -t nat -A PREROUTING -p tcp --dport <incoming_port> -j REDIRECT --to-port <upgoing_port>
-# verify config
-netstat -ntl
-```
-
-Happy: !
-
-www.prometheus.big.opsta.in.th/graph
-
-### Coming soon
-
-setting up for graylog access
-
 # HAProxy
 
 ## Overview
@@ -187,3 +163,27 @@ go to helm/monitoring/grafana and follow [READMD](./helm/monitoring/grafana/READ
 # Monitoring Zone
 
 go to [README](./playbook-monitoring/README.md)
+
+## DNS setting
+
+We have set DNS point to prometheus.big.opsta.in.th -> 10.22.1.63 (prometheus-host)
+
+### Prometheus-host
+
+We will redirect port from 80 to 9090; running prometheus
+
+Then, you can access website via <prometheus_url>/ instead of <prometheus_url>:<prometheus_port>/
+
+```bash
+sudo iptables -t nat -A PREROUTING -p tcp --dport <incoming_port> -j REDIRECT --to-port <upgoing_port>
+# verify config
+netstat -ntl
+```
+
+Happy: !
+
+www.prometheus.big.opsta.in.th/graph
+
+### Coming soon
+
+setting up for graylog access
