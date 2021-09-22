@@ -129,7 +129,7 @@ backend prometheus.big.opsta.in.th
     balance roundrobin
     option httpchk HEAD /
     default-server check maxconn 2000
-    server prometheus 10.22.1.63:80 check
+    server prometheus 10.22.1.63:9090 check
 
 backend graylog.big.opsta.in.th
     balance roundrobin
