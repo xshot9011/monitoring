@@ -1,7 +1,0 @@
----
-- hosts: all
-  gather_facts: yes
-  become: true
-  roles:
-    - cloudalchemy.node_exporter
-  environment: "{{ proxy_env | default({}) }}"

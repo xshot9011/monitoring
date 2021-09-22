@@ -29,12 +29,12 @@ prometheus_scrape_configs:
         # - '{job="opstella-blackbox"}'
     static_configs:
       - targets:
-        - 'prometheus.develop.big.opsta.in.th'
+        - 'prometheus.develop.cluster.big.opsta.in.th'
         labels:
-          env: develop
-          project: opstella
-          type: develop
-          hostname:  opstella-devops-develop
+          env: dev
+          project: opsta-monitoring
+          type: dev
+          hostname:  prometheus.develop.cluster.big.opsta.in.th
     metric_relabel_configs:
       - source_labels: [job]
         regex: 'kubernetes-service-endpoints'
