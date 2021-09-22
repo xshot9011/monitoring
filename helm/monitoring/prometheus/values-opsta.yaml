@@ -767,7 +767,7 @@ server:
     ## Must be provided if Ingress is enabled
     ##
     hosts:
-      - prometheus.develop.cluster.big.opsta.in.th
+      - grafana.cluster.big.opsta.in.th/prometheus
     #   - prometheus.domain.com
     #   - domain.com/prometheus
 

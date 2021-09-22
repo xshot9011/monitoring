@@ -36,7 +36,7 @@ helm upgrade --install prometheus prometheus-community/prometheus -f values-opst
   ```
 - server.ingress.hosts -> [] -> 
   [
-    prometheus.develop.cluster.big.opsta.in.th
+    grafana.cluster.big.opsta.in.th/prometheus
   ]
 - server.persistentVolume.enabled -> true -> false
 - server.securityContext ->
@@ -54,6 +54,8 @@ helm upgrade --install prometheus prometheus-community/prometheus -f values-opst
       fsGroup: 0
   ```
 - pushgateway.enabled -> true -> false
+
+***** not done yet*****
 - serverFiles.prometheus.yml.scrape_configs -> append ->
   ```yaml
         - job_name: service-mongodb
