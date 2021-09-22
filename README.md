@@ -38,6 +38,7 @@ ansible==2.9.1
 cffi==1.14.6
 cryptography==3.4.8
 Jinja2==3.0.1
+jmespath==0.10.0
 MarkupSafe==2.0.1
 netaddr==0.8.0
 pycparser==2.20
