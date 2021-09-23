@@ -150,7 +150,6 @@ go to helm/nginx-ingress and follow [README](./helm/nginx-ingress/README.md)
 
 go to helm/datastore/mongodb and follow [README](./helm/datastore/mongodb/README.md)
 
-: bug remote -> status: w8 for fixing
 
 ## 3. Install prometheus
 
@@ -159,6 +158,10 @@ go to helm/monitoring/prometheus and follow [READMD](./helm/monitoring/prometheu
 ## 4. Install grafana
 
 go to helm/monitoring/grafana and follow [READMD](./helm/monitoring/grafana/README.md)
+
+## 5. Install mongodb-exporter
+
+go to helm/datastore/mongodb and follow [READMD](./helm/datastore/mongodb/README.md)
 
 # Monitoring Zone
 
@@ -187,8 +190,3 @@ http://prometheus.big.opsta.in.th/graph
 ### Coming soon
 
 setting up for graylog access
-
-## Scrapeconfig
-
-***** Insert scrpeconfig here *****
-

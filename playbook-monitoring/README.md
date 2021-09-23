@@ -1,8 +1,26 @@
+# Note
+
+********************************************************************************************
+********************************************************************************************
+จัดรูปแบบอีกทีว่าอันไหนขึ้นก่อน
+********************************************************************************************
+********************************************************************************************
+
 # Infomation about playbook
 
 - Ansible playbook about prometheus installation (role)
-- Ansible playbook about node-exporter installation (role)
+- *.big.opsta.in.th (domain)
 
-# Domain wildcard
+# 1. Install prometheus as systemd
 
-*.big.opsta.in.th
+: on bastion; ansible installed
+
+configuration in [config](./group_vars/platform_monitoring/prometheus.yaml)
+
+```bash
+ansible-playbook opsta-prometheus.yaml -i inventories/opsta-k8s/monitoring.ini --become -K --limit monitoring
+```
+
+# 2. Install grafana as systemd
+
+# 3. Install graylog

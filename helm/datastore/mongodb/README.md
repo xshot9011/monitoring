@@ -29,3 +29,20 @@ helm upgrade --install mongodb bitnami/mongodb -f values-opsta.yaml -n datastore
 
 - persistence.enabled -> true -> false
 - auth.rootPassword -> "" -> mongodb_password
+
+### Update prometheus scrap_configs
+
+- serverFiles.prometheus.yml.scrape_configs -> append ->
+  ```yaml
+        - job_name: service-mongodb
+          metrics_path: /metrics
+          scheme: http
+          static_configs:
+            - targets:
+                - "mongodb-exporter-prometheus-mongodb-exporter:9216"
+              labels:
+                env: dev
+                project: opsta-monitoring
+                type: datastore
+                service: mongodb
+  ```

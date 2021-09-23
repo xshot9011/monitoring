@@ -73,3 +73,7 @@ kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheu
       fsGroup: 0
   ```
 - pushgateway.enabled -> true -> false
+
+### Scrape_configs 
+
+This path will be updated in future while you are following the README &-&

@@ -22,6 +22,7 @@ prometheus_scrape_configs:
         - '{job="kube-state-metrics"}'
         - '{job="kubelet"}'
         - '{job="kubernetes-service-endpoints"}'
+        - '{job="service-mongodb"}'
         # - '{job="service-postgres"}'
         # - '{job="service-rabbitmq"}'
         # - '{job="service-redis"}'
