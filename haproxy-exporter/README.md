@@ -29,8 +29,8 @@ frontend stats
     metrics_path: /metrics
     static_configs:
       - targets: ['haproxy.cluster.big.opsta.in.th:8404']  # just mapping to haproxy ignore the dns
-          labels:
-            env: dev
-            project: opsta-monitoring
-            hostname: haproxy.cluster.big.opsta.in.th
+        labels:
+          env: dev
+          project: opsta-monitoring
+          hostname: haproxy.cluster.big.opsta.in.th
 ```
