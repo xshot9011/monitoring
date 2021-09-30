@@ -196,3 +196,7 @@ Now Happy !
 
 http://prometheus.big.opsta.in.th/
 http://grafana.big.opsta.in.th/
+
+## Install HAProxy exporter
+
+go to [README](./haproxy-exporter/README.md)

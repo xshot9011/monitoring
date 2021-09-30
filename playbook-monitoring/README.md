@@ -15,6 +15,8 @@
 
 : on bastion; ansible installed
 
+VERSION 4.0.0
+
 configuration in [config](./group_vars/platform_monitoring/prometheus.yaml)
 
 ```bash
@@ -23,9 +25,9 @@ ansible-playbook opsta-prometheus.yaml -i inventories/opsta-k8s/monitoring.ini -
 
 # 2. Install grafana as systemd
 
-[doc](https://github.com/cloudalchemy/ansible-grafana)
+configuration in [config](./group_vars/platform_monitoring/grafana.yaml)
 
-We use version 0.17.0
+VERSION 0.17.0
 
 ```bash
 ansible-playbook opsta-grafana.yaml -i inventories/opsta-k8s/monitoring.ini --become -K --limit monitoring
