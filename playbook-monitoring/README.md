@@ -23,4 +23,14 @@ ansible-playbook opsta-prometheus.yaml -i inventories/opsta-k8s/monitoring.ini -
 
 # 2. Install grafana as systemd
 
+[doc](https://github.com/cloudalchemy/ansible-grafana)
+
+We use version 0.17.0
+
+```bash
+ansible-playbook opsta-grafana.yaml -i inventories/opsta-k8s/monitoring.ini --become -K --limit monitoring
+```
+
 # 3. Install graylog
+
+Following with this [url](https://github.com/xshot9011/short-note/blob/master/devops%20-%20new%20version/installation/monitoring/graylog/README.md)

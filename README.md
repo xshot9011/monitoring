@@ -119,6 +119,7 @@ Append information with
 ```conf
 frontend web-server
     bind :80
+    mode tcp
     use_backend k8s_cluster
 
 backend k8s_cluster
@@ -150,7 +151,6 @@ go to helm/nginx-ingress and follow [README](./helm/nginx-ingress/README.md)
 
 go to helm/datastore/mongodb and follow [README](./helm/datastore/mongodb/README.md)
 
-
 ## 3. Install prometheus
 
 go to helm/monitoring/prometheus and follow [READMD](./helm/monitoring/prometheus/README.md)
@@ -169,24 +169,30 @@ go to [README](./playbook-monitoring/README.md)
 
 ## DNS setting
 
-We have set DNS point to prometheus.big.opsta.in.th -> 10.22.1.63 (prometheus-host)
+We have set DNS point to prometheus.big.opsta.in.th and grafana.big.opsta.in.th -> 10.22.1.63 (prometheus-host)
 
-### Prometheus-host
+We install nginx in prometheus host mapping hostname to target port
 
-We will redirect port from 80 to 9090; running prometheus
+```conf
+server {
+        listen 80;
+        server_name prometheus.big.opsta.in.th;
 
-Then, you can access website via <prometheus_url>/ instead of <prometheus_url>:<prometheus_port>/
+        location / {
+                proxy_pass http://0.0.0.0:9090;
+        }
+}
 
-```bash
-sudo iptables -t nat -A PREROUTING -p tcp --dport <incoming_port> -j REDIRECT --to-port <upgoing_port>
-# verify config
-netstat -ntl
+server {
+        listen 80;
+        server_name grafana.big.opsta.in.th;
+
+        location / {
+                proxy_pass http://0.0.0.0:3000;
+        }
+}
 ```
+Now Happy !
 
-Happy: !
-
-http://prometheus.big.opsta.in.th/graph
-
-### Coming soon
-
-setting up for graylog access
+http://prometheus.big.opsta.in.th/
+http://grafana.big.opsta.in.th/
