@@ -1,0 +1,30 @@
+groups:
+  - name: k8spod
+    rules:
+    - alert: PodTerminated
+      expr: kube_pod_container_status_terminated{pod!~".*kong-pre.*|.*kong-post.*|.*kong-init.*"} == 1
+      for: 15m
+      labels:
+        severity: critical
+        alertType: k8s
+      annotations:
+        description: "pod: {{ $labels.pod }} \n namespace: {{ $labels.namespace }} \n node: {{ $labels.type }}\n status: terminated"
+        summary: "Pod terminated (instance {{ $labels.instance }})"
+    - alert: PodPending
+      expr: kube_pod_container_status_waiting > 0
+      for: 30m
+      labels:
+        severity: critical
+        alertType: k8s
+      annotations:
+        description: "pod: {{ $labels.pod }} \n namespace: {{ $labels.namespace }} \n node: {{ $labels.type }}\n status: pending"
+        summary: "Pod is pending (instance {{ $labels.instance }})"
+    - alert: PodRestarting
+      expr: sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[1m])) by (pod,namespace,container,type,env) > 0
+      for: 5s
+      labels:
+        severity: critical
+        alertType: k8s
+      annotations:
+        description: "pod: {{ $labels.pod }} \n namespace: {{ $labels.namespace }} \n node: {{ $labels.type }}\n status: restarting"
+        summary: "Pod is restarting (instance {{ $labels.instance }})"

@@ -1,0 +1,39 @@
+groups:
+  - name: postgres
+    rules:    
+    - alert: PostgresDown
+      expr: pg_up == 0
+      for: 1m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "{{ $labels.service }} : {{ $labels.instance }} is down"
+        summary: "Postgres down (instance {{ $labels.instance }})"
+    - alert: PostgresRestart
+      expr: time() - pg_postmaster_start_time_seconds < 60
+      for: 5m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "{{ $labels.service }} : {{ $labels.instance }} restarted"
+        summary: "Postgres restarted (instance {{ $labels.instance }})"
+    - alert: PostgresDeadLocks
+      expr: rate(pg_stat_database_deadlocks{datname!~"template.*|postgres"}[1m]) > 0
+      for: 10m
+      labels:
+        severity: warning
+        alertType: infra-service
+      annotations:
+        description: "{{ $labels.service }} : {{ $labels.instance }} has dead locks"
+        summary: "Postgres dead locks (instance {{ $labels.instance }})"
+    - alert: PostgresTooManyConnection
+      expr: sum by (datname) (pg_stat_activity_count{datname!~"template.*|postgres"}) > 360
+      for: 10m
+      labels:
+        severity: warning
+        alertType: infra-service
+      annotations:
+        description: "{{ $labels.service }} : {{ $labels.instance }} has too many connections"
+        summary: "Postgres too many connections (instance {{ $labels.instance }})"

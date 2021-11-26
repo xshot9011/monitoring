@@ -1,0 +1,69 @@
+groups:
+  - name: node-exporter
+    rules:
+    - alert: HostHighCpuLoad #tested
+      expr: 100 - ((irate(node_cpu_seconds_total{mode="idle"}[10m])) * 100) >= 90
+      for: 30m
+      labels:
+        severity: warning
+        alertType: infra-service
+      annotations:
+        description: "CPU load is > 90%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Host high CPU load (instance {{ $labels.instance }})"
+    - alert: HostHighCpuLoad
+      expr: 100 - ((irate(node_cpu_seconds_total{mode="idle"}[10m])) * 100) >= 95
+      for: 20m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "CPU load is > 95%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Host high CPU load (instance {{ $labels.instance }})"
+
+    - alert: HostHighMemoryUsage
+      expr: 100 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) >= 90
+      for: 10m
+      labels:
+        severity: warning
+        alertType: infra-service
+      annotations:
+        description: "Node memory is > 75%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Host out of memory (instance {{ $labels.instance }})"
+    - alert: HostHighMemoryUsage
+      expr: 100 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) >= 95
+      for: 10m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "Node memory is > 90%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Host out of memory (instance {{ $labels.instance }})"
+
+    - alert: HostHighDiskUsage #tested
+      expr: 100 - (node_filesystem_avail_bytes{mountpoint !~ "/mnt.*|/run.*|/boot.*|/snap.*|/var/lib/lxcfs"}  * 100) / node_filesystem_size_bytes{mountpoint !~ "/mnt.*|/run.*|/boot.*|/snap.*|/var/lib/lxcfs"} >= 80
+      for: 10m
+      labels:
+        severity: warning
+        alertType: infra-service
+      annotations:
+        description: "Disk is > 80%\n {{ $labels.hostname }} : {{ $labels.instance }}\n Mountpoint: {{ $labels.mountpoint}}"
+        summary: "Host out of disk space (instance {{ $labels.instance }})"
+    - alert: HostHighDiskUsage #tested
+      expr: 100 - (node_filesystem_avail_bytes{mountpoint !~ "/mnt.*|/run.*|/boot.*|/snap.*|/var/lib/lxcfs"}  * 100) / node_filesystem_size_bytes{mountpoint !~ "/mnt.*|/run.*|/boot.*|/snap.*|/var/lib/lxcfs"} >= 90
+      for: 10m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "Disk is > 90%\n {{ $labels.hostname }} : {{ $labels.instance }}\n Mountpoint: {{ $labels.mountpoint}}"
+        summary: "Host out of disk space (instance {{ $labels.instance }})"
+
+    - alert: HostDown #tested
+      expr: up{hostname!~"gke.*"} == 0
+      for: 1m
+      labels:
+        severity: critical
+        alertType: infra-service
+      annotations:
+        description: "{{ $labels.hostname }} : {{ $labels.instance }} is down"
+        summary: "Host down (instance {{ $labels.instance }})"

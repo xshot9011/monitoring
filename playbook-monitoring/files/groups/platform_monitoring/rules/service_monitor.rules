@@ -1,0 +1,11 @@
+groups:
+  - name: service_monitor
+    rules:
+    - alert: ServiceProbeHttpFailure
+      expr: probe_http_status_code <= 199 OR probe_http_status_code >= 400
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        description: "{{ $labels.hostname }} : {{ $labels.instance }} is status {{ $value }}."
+        summary: "HTTP status code is not 200-399 (instance {{ $labels.instance }})"

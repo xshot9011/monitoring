@@ -1,0 +1,43 @@
+groups:
+  - name: windows_server
+    rules:
+    - alert: WindowsServerServiceStatusDown
+      expr: windows_service_status{status="ok"} != 1
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        description: "Service: {{ $labels.name }} Host: {{ $labels.hostname }} : {{ $labels.instance }} is down"
+        summary: "Windows server service {{ $labels.name }} status down (instance {{ $labels.instance }})"
+    - alert: WindowsServerCollectorError
+      expr: windows_exporter_collector_success == 0
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        description: "{{ $labels.service }} : {{ $labels.instance }} is Collector Error"
+        summary: "Windows server Collector Error (instance {{ $labels.instance }})"
+    - alert: WindowsServerCpuUsage
+      expr: 100 - (avg by (instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 80
+      for: 0m
+      labels:
+        severity: warning
+      annotations:
+        description: "Windows server CPU is > 80%\n {{ $labels.instance }}"
+        summary: "Windows Server CPU Usage (instance {{ $labels.instance }})"
+    - alert: WindowsServerMemoryUsage
+      expr: 100 - ((windows_os_physical_memory_free_bytes / windows_cs_physical_memory_bytes) * 100) > 90
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        description: "Windows server memory is > 90%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Windows Server memory Usage (instance {{ $labels.instance }})"
+    - alert: WindowsServerDiskSpaceUsage
+      expr: 100.0 - 100 * ((windows_logical_disk_free_bytes / 1024 / 1024 ) / (windows_logical_disk_size_bytes / 1024 / 1024)) > 80
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        description: "Windows server disk is > 80%\n {{ $labels.hostname }} : {{ $labels.instance }}"
+        summary: "Windows Server disk Space Usage (instance {{ $labels.instance }})"

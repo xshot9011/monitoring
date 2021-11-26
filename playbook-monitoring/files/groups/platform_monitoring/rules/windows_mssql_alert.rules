@@ -1,0 +1,11 @@
+groups:
+  - name: windows_mssql
+    rules:
+    - alert: WindowsMssqlDeadlocks
+      expr: increase(windows_mssql_locks_deadlocks[1m]) > 5
+      for: 0m
+      labels:
+        severity: warning
+      annotations:
+        description: "{{ $labels.hostname }} : {{ $labels.instance }} is deadlocks"
+        summary: "Windows MSSQL Deadlocks (instance {{ $labels.instance }})"

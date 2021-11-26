@@ -52,6 +52,9 @@ prometheus_scrape_configs:
           hostname: haproxy.cluster.big.opsta.in.th
 
 prometheus_alert_rules: []
+# prometheus_alert_rules_files:
+#   - 'groups/platform_monitoring/rules/*.rules'
+
 
 prometheus_storage_retention: "1d"
 # Available since Prometheus 2.7.0
